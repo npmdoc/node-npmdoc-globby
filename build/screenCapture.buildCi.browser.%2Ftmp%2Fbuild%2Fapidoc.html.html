@@ -1,0 +1,493 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/sindresorhus/globby#readme">globby (v6.1.0)</a>
+</h1>
+<h4>Extends `glob` with support for multiple patterns and exposes a Promise API</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.globby">module globby</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.globby">
+            function <span class="apidocSignatureSpan"></span>globby
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.generateGlobTasks">
+            function <span class="apidocSignatureSpan">globby.</span>generateGlobTasks
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.hasMagic">
+            function <span class="apidocSignatureSpan">globby.</span>hasMagic
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.index">
+            function <span class="apidocSignatureSpan">globby.</span>index
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.sync">
+            function <span class="apidocSignatureSpan">globby.</span>sync
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.globby.index">module globby.index</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.index.index">
+            function <span class="apidocSignatureSpan">globby.</span>index
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.index.generateGlobTasks">
+            function <span class="apidocSignatureSpan">globby.index.</span>generateGlobTasks
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.index.hasMagic">
+            function <span class="apidocSignatureSpan">globby.index.</span>hasMagic
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.globby.index.sync">
+            function <span class="apidocSignatureSpan">globby.index.</span>sync
+            <span class="apidocSignatureSpan">(patterns, opts)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.globby" id="apidoc.module.globby">module globby</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.globby.globby" id="apidoc.element.globby.globby">
+        function <span class="apidocSignatureSpan"></span>globby
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">globby = function (patterns, opts) {
+	var globTasks;
+
+	try {
+		globTasks = generateGlobTasks(patterns, opts);
+	} catch (err) {
+		return Promise.reject(err);
+	}
+
+	return Promise.all(globTasks.map(function (task) {
+		return globP(task.pattern, task.opts);
+	})).then(function (paths) {
+		return arrayUnion.apply(null, paths);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.generateGlobTasks" id="apidoc.element.globby.generateGlobTasks">
+        function <span class="apidocSignatureSpan">globby.</span>generateGlobTasks
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function generateGlobTasks(patterns, opts) {
+	patterns = [].concat(patterns);
+	assertPatternsInput(patterns);
+
+	var globTasks = [];
+
+	opts = objectAssign({
+		cache: Object.create(null),
+		statCache: Object.create(null),
+		realpathCache: Object.create(null),
+		symlinks: Object.create(null),
+		ignore: []
+	}, opts);
+
+	patterns.forEach(function (pattern, i) {
+		if (isNegative(pattern)) {
+			return;
+		}
+
+		var ignore = patterns.slice(i).filter(isNegative).map(function (pattern) {
+			return pattern.slice(1);
+		});
+
+		globTasks.push({
+			pattern: pattern,
+			opts: objectAssign({}, opts, {
+				ignore: opts.ignore.concat(ignore)
+			})
+		});
+	});
+
+	return globTasks;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Returns a Promise for an array of matching paths.
+
+### globby.sync(patterns, [options])
+
+Returns an array of matching paths.
+
+### globby.<span class="apidocCodeKeywordSpan">generateGlobTasks</span>(patterns, [options])
+
+Returns an array of objects in the format `{ pattern: string, opts: Object }`, which can be passed as arguments to [`node-glob`](
+https://github.com/isaacs/node-glob). This is useful for other globbing-related packages.
+
+Note that you should avoid running the same tasks multiple times as they contain a file system cache. Instead, run this method each
+ time to ensure file system changes are taken into consideration.
+
+### globby.hasMagic(patterns, [options])
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.hasMagic" id="apidoc.element.globby.hasMagic">
+        function <span class="apidocSignatureSpan">globby.</span>hasMagic
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">hasMagic = function (patterns, opts) {
+	return [].concat(patterns).some(function (pattern) {
+		return glob.hasMagic(pattern, opts);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	}, []);
+};
+
+module.exports.generateGlobTasks = generateGlobTasks;
+
+module.exports.hasMagic = function (patterns, opts) {
+	return [].concat(patterns).some(function (pattern) {
+		return glob.<span class="apidocCodeKeywordSpan">hasMagic</span>(pattern, opts);
+	});
+};
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.index" id="apidoc.element.globby.index">
+        function <span class="apidocSignatureSpan">globby.</span>index
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">index = function (patterns, opts) {
+	var globTasks;
+
+	try {
+		globTasks = generateGlobTasks(patterns, opts);
+	} catch (err) {
+		return Promise.reject(err);
+	}
+
+	return Promise.all(globTasks.map(function (task) {
+		return globP(task.pattern, task.opts);
+	})).then(function (paths) {
+		return arrayUnion.apply(null, paths);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.sync" id="apidoc.element.globby.sync">
+        function <span class="apidocSignatureSpan">globby.</span>sync
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">sync = function (patterns, opts) {
+	var globTasks = generateGlobTasks(patterns, opts);
+
+	return globTasks.reduce(function (matches, task) {
+		return arrayUnion(matches, glob.sync(task.pattern, task.opts));
+	}, []);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	});
+};
+
+module.exports.sync = function (patterns, opts) {
+	var globTasks = generateGlobTasks(patterns, opts);
+
+	return globTasks.reduce(function (matches, task) {
+		return arrayUnion(matches, glob.<span class="apidocCodeKeywordSpan">sync</span>(task.pattern, task.opts));
+	}, []);
+};
+
+module.exports.generateGlobTasks = generateGlobTasks;
+
+module.exports.hasMagic = function (patterns, opts) {
+	return [].concat(patterns).some(function (pattern) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.globby.index" id="apidoc.module.globby.index">module globby.index</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.globby.index.index" id="apidoc.element.globby.index.index">
+        function <span class="apidocSignatureSpan">globby.</span>index
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">index = function (patterns, opts) {
+	var globTasks;
+
+	try {
+		globTasks = generateGlobTasks(patterns, opts);
+	} catch (err) {
+		return Promise.reject(err);
+	}
+
+	return Promise.all(globTasks.map(function (task) {
+		return globP(task.pattern, task.opts);
+	})).then(function (paths) {
+		return arrayUnion.apply(null, paths);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.index.generateGlobTasks" id="apidoc.element.globby.index.generateGlobTasks">
+        function <span class="apidocSignatureSpan">globby.index.</span>generateGlobTasks
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function generateGlobTasks(patterns, opts) {
+	patterns = [].concat(patterns);
+	assertPatternsInput(patterns);
+
+	var globTasks = [];
+
+	opts = objectAssign({
+		cache: Object.create(null),
+		statCache: Object.create(null),
+		realpathCache: Object.create(null),
+		symlinks: Object.create(null),
+		ignore: []
+	}, opts);
+
+	patterns.forEach(function (pattern, i) {
+		if (isNegative(pattern)) {
+			return;
+		}
+
+		var ignore = patterns.slice(i).filter(isNegative).map(function (pattern) {
+			return pattern.slice(1);
+		});
+
+		globTasks.push({
+			pattern: pattern,
+			opts: objectAssign({}, opts, {
+				ignore: opts.ignore.concat(ignore)
+			})
+		});
+	});
+
+	return globTasks;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Returns a Promise for an array of matching paths.
+
+### globby.sync(patterns, [options])
+
+Returns an array of matching paths.
+
+### globby.<span class="apidocCodeKeywordSpan">generateGlobTasks</span>(patterns, [options])
+
+Returns an array of objects in the format `{ pattern: string, opts: Object }`, which can be passed as arguments to [`node-glob`](
+https://github.com/isaacs/node-glob). This is useful for other globbing-related packages.
+
+Note that you should avoid running the same tasks multiple times as they contain a file system cache. Instead, run this method each
+ time to ensure file system changes are taken into consideration.
+
+### globby.hasMagic(patterns, [options])
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.index.hasMagic" id="apidoc.element.globby.index.hasMagic">
+        function <span class="apidocSignatureSpan">globby.index.</span>hasMagic
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">hasMagic = function (patterns, opts) {
+	return [].concat(patterns).some(function (pattern) {
+		return glob.hasMagic(pattern, opts);
+	});
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	}, []);
+};
+
+module.exports.generateGlobTasks = generateGlobTasks;
+
+module.exports.hasMagic = function (patterns, opts) {
+	return [].concat(patterns).some(function (pattern) {
+		return glob.<span class="apidocCodeKeywordSpan">hasMagic</span>(pattern, opts);
+	});
+};
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.globby.index.sync" id="apidoc.element.globby.index.sync">
+        function <span class="apidocSignatureSpan">globby.index.</span>sync
+        <span class="apidocSignatureSpan">(patterns, opts)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">sync = function (patterns, opts) {
+	var globTasks = generateGlobTasks(patterns, opts);
+
+	return globTasks.reduce(function (matches, task) {
+		return arrayUnion(matches, glob.sync(task.pattern, task.opts));
+	}, []);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+	});
+};
+
+module.exports.sync = function (patterns, opts) {
+	var globTasks = generateGlobTasks(patterns, opts);
+
+	return globTasks.reduce(function (matches, task) {
+		return arrayUnion(matches, glob.<span class="apidocCodeKeywordSpan">sync</span>(task.pattern, task.opts));
+	}, []);
+};
+
+module.exports.generateGlobTasks = generateGlobTasks;
+
+module.exports.hasMagic = function (patterns, opts) {
+	return [].concat(patterns).some(function (pattern) {
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
